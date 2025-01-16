@@ -3,27 +3,24 @@ using Microsoft.UI.Xaml.Input;
 using Mapsui.Tiling;
 using Mapsui.Manipulations;
 using System.Diagnostics;
-using Mapsui.Widgets.ScaleBar;
-using Mapsui.Widgets;
 using Mapsui;
-using Mapsui.Extensions;
-using Mapsui.Utilities;
-using DotSpatial.Projections.Transforms;
 using Mapsui.Projections;
+using Pruebas.Services;
 
 namespace Pruebas.Vistas
 {
     public sealed partial class Provincias : Page
     {
-        double _finalLongitude {  get; set; }
-        double _finalLatitude { get; set; }
-
-        public Provincias()
+        double? _finalLongitude {  get; set; }
+        double? _finalLatitude { get; set; }
+        private ServiceGetDataWithForecastAPI _serviceGetDataWithForecastAPI = new ServiceGetDataWithForecastAPI();
+        public Provincias ()
         {
+            
             this.InitializeComponent();
             MyMap.Map.CRS = "EPSG:4326";
             MyMap.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
-           
+            
             
         }
         private void MyMap_Tapped(object sender, TappedRoutedEventArgs e)
@@ -47,7 +44,7 @@ namespace Pruebas.Vistas
             _finalLongitude = prueba2.lat;
             _finalLatitude = prueba2.lon;
 
-
+            boton.IsEnabled = true;
 
             Debug.WriteLine("Latitud: " + _finalLongitude + ", Longitud: " + _finalLatitude);
 
@@ -56,14 +53,14 @@ namespace Pruebas.Vistas
 
         public void addForecastEventByButtonPressed(object sender, TappedRoutedEventArgs e)
         {
-            Debug.WriteLine("entro");
-
-            boton.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-        }
-
-        private void boton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
+            if(_finalLatitude == null || _finalLongitude == null)
+            {
+                boton.IsEnabled = false;
+            }
+            
 
         }
+
+        
     }
 }
