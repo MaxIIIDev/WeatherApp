@@ -18,5 +18,21 @@ namespace Pruebas.Models
         public double wind { get; set; }
         public string image { get; set; }
         public string textImage { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"fecha= {this.date}\n" +
+                $"nombre = {this.name}\n " +
+                $"latitud = {this.latitude}\n " +
+                $"longitud = {this.longitude}\n " +
+                $"temperaturaMaxima = {this.maxTemperature}\n" +
+                $"temperaturaMinima = {this.minTemperature}\n" +
+                $"precipitacion = {this.precipitation}\n " +
+                $"viento = {this.wind}\n" +
+                $"imagen = {this.image}\n" +
+                $"textClima = {this.textImage}";
+        }
+
     }
 }

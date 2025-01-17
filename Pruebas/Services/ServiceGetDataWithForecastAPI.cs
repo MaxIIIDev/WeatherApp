@@ -62,6 +62,41 @@ namespace Pruebas.Services
 
             return apiDataOpenToWork!;
         }
+        public async Task<List<Root>> GetInfoFromForecastAPI(string cityName)
+        {
+            List<Root>? apiDataOpenToWork = null;
+            try
+            {
+                string BaseURL = "https://localhost:7232/GetForecastByCityName?";
+                string fragmentWithCityName = $"cityName={cityName}";
 
+
+                
+                string fullURL = $"{BaseURL}{fragmentWithCityName}";
+                HttpResponseMessage dataFromApiForecast = await client.GetAsync(fullURL);
+                dataFromApiForecast.EnsureSuccessStatusCode();
+
+                string readInfoFromApi = await dataFromApiForecast.Content.ReadAsStringAsync();
+
+                apiDataOpenToWork = JsonSerializer.Deserialize<List<Root>>(readInfoFromApi);
+
+                if (apiDataOpenToWork == null)
+                {
+                    throw new Exception("Api dont provides information");
+                }
+
+
+            }
+            catch (HttpRequestException exception)
+            {
+                Debug.Write(exception.Message);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return apiDataOpenToWork!;
+        }
     }
 }

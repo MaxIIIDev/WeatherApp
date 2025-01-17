@@ -12,20 +12,28 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-
-
         </Grid.RowDefinitions>
+        <AutoSuggestBox
+            x:Name="searchBox"
+            Grid.Row="0"
+            Height="40"
+            Margin="3"
+            PlaceholderText="Search your city"
+            QueryIcon="Find"
+            QuerySubmitted="AutoSuggestBox_QuerySubmitted" />
+
         <winui:MapControl
             x:Name="MyMap"
-            Grid.Row="0"
+            Grid.Row="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Tapped="MyMap_Tapped" />
         <Button
             Name="boton"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="1"
             Margin="5"
             HorizontalAlignment="Center"
