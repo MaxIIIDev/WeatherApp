@@ -34,10 +34,7 @@ namespace Pruebas
           
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+        
         private void cambiarPagina(object sender, NavigationViewSelectionChangedEventArgs args)
         {
             var itemSeleccionado = args.SelectedItem as NavigationViewItem;

@@ -15,15 +15,15 @@ namespace Pruebas.Services
     {
 
         private HttpClient client = new();
-        public ServiceToParseForecastAPIInformationToClimaClass _serviceToParseForecastAPIInformationToClimaClass = new ServiceToParseForecastAPIInformationToClimaClass();
+        //public ServiceToParseForecastAPIInformationToClimaClass _serviceToParseForecastAPIInformationToClimaClass = new ServiceToParseForecastAPIInformationToClimaClass();
         public ServiceGetDataWithForecastAPI()
         {
             
         }
 
-        public async Task<List<ClimaProvincia>> GetInfoFromForecastAPI(double latitude, double longitude)
+        public async Task<List<Root>> GetInfoFromForecastAPI(double latitude, double longitude)
         {
-            List<ClimaProvincia> listWithForecastParsed = null;
+            List<Root>? apiDataOpenToWork = null;
             try
             {
                 string BaseURL = "https://localhost:7232/Root?";
@@ -35,19 +35,19 @@ namespace Pruebas.Services
 
                 string readInfoFromApi = await dataFromApiForecast.Content.ReadAsStringAsync();
                 
-                List<Root> apiDataOpenToWork = JsonSerializer.Deserialize<List<Root>>(readInfoFromApi);
+                apiDataOpenToWork = JsonSerializer.Deserialize<List<Root>>(readInfoFromApi);
 
                 if(apiDataOpenToWork == null)
                 {
                     throw new Exception("Api dont provides information");
                 }
 
-                listWithForecastParsed = _serviceToParseForecastAPIInformationToClimaClass.ParseInformationFromAPIToClimaClass(apiDataOpenToWork);
+                //listWithForecastParsed = _serviceToParseForecastAPIInformationToClimaClass.ParseInformationFromAPIToClimaClass(apiDataOpenToWork);
 
-                if(listWithForecastParsed == null)
-                {
-                    throw new Exception("Service with Forecast Parsed dont return information");
-                }
+                //if(listWithForecastParsed == null)
+                //{
+                //    throw new Exception("Service with Forecast Parsed dont return information");
+                //}
 
 
             }
@@ -60,7 +60,7 @@ namespace Pruebas.Services
                 Debug.WriteLine(ex.Message);
             }
 
-            return listWithForecastParsed;
+            return apiDataOpenToWork!;
         }
 
     }

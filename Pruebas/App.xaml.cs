@@ -35,7 +35,7 @@ namespace Pruebas
         /// </summary>
         /// 
         private ServiceGetDataWithForecastAPI _serviceGetDataWithForecastAPI;
-        private ServiceToParseForecastAPIInformationToClimaClass _serviceToParseClimaClass;
+        //private ServiceToParseForecastAPIInformationToClimaClass _serviceToParseClimaClass;
         public App()
         {
             this.InitializeComponent();
