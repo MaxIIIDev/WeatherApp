@@ -26,6 +26,7 @@ namespace Pruebas.Vistas
         public Inicio()
         {
             this.InitializeComponent();
+            
         }
     }
 }

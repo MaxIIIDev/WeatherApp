@@ -14,18 +14,23 @@ using NetTopologySuite.Geometries;
 using Mapsui.Layers;
 using Mapsui.Styles;
 using Mapsui.Nts;
+using Microsoft.UI.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Pruebas.Vistas
 {
-    public sealed partial class Provincias : Page
+    public partial class Provincias : Page
     {
         double? _finalLongitude {  get; set; }
         double? _finalLatitude { get; set; }
+
+        ServiceGetAllCityInLocalData _ServiceGetAllCityInLocalData { get;}
+
         private ServiceGetDataWithForecastAPI _serviceGetDataWithForecastAPI = new ServiceGetDataWithForecastAPI();
         private GenericCollectionLayer<List<IFeature>> layer;
         public Provincias ()
         {
-            
+            _ServiceGetAllCityInLocalData = ((App)Application.Current).ServiceProvider.GetService<ServiceGetAllCityInLocalData>();
             this.InitializeComponent();
             MyMap.Map.CRS = "EPSG:4326";
             MyMap.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
@@ -87,10 +92,7 @@ namespace Pruebas.Vistas
                     forecastObtainWithApi = await _serviceGetDataWithForecastAPI.GetInfoFromForecastAPI(latitudeReadyToWork, longitudeReadyToWork);
                 }
 
-                foreach (var a in forecastObtainWithApi)
-                {
-                    Debug.WriteLine(a.ToString());
-                }
+                _ServiceGetAllCityInLocalData.AddCity(forecastObtainWithApi);
                 _finalLongitude = null;
                 _finalLatitude = null;
                 boton.IsEnabled = false; 
@@ -120,6 +122,12 @@ namespace Pruebas.Vistas
                 //sacar la info del servicio, utilizar el spericalmercator from, para convertir las latitudes y longitudes en posiciones del mapa y luego, añadir un pin con las mismas
 
                 List<Root> forecastList = await _serviceGetDataWithForecastAPI.GetInfoFromForecastAPI(searchBox.Text);
+
+                foreach(var forecast in forecastList)
+                {
+                    Debug.WriteLine(forecast.ToString());
+                    
+                }
 
                 var ppp = SphericalMercator.FromLonLat(forecastList[0].longitude, forecastList[0].latitude);
 
