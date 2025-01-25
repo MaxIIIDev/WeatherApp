@@ -1,22 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Pruebas.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Pruebas.Models;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Pruebas.Helpers;
+using BruTile.Wms;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,154 +21,227 @@ namespace Pruebas.Vistas
     public partial  class Inicio : Page
     {
         ServiceGetAllCityInLocalData? _ServiceGetAllCityInLocalData { get; }
-        int count { get; set; } = 0; 
+        int count { get; set; } = 0; //count for iterate a list
         public Inicio()
         {
-            _ServiceGetAllCityInLocalData = ((App)Application.Current).ServiceProvider.GetService<ServiceGetAllCityInLocalData>();
+            _ServiceGetAllCityInLocalData = ((App)Application.Current).ServiceProvider.GetService<ServiceGetAllCityInLocalData>(); //Service for obtain all local data with forecast city
             this.InitializeComponent();
-            setEmptyAllPanels();
+            setEmptyAllPanels(); //local method for set empty all panels
         }
 
-        public  void completeInfoForPrincipalPanel(List<Root> forecastCity)
+        public  void completeInfoForPrincipalPanel(List<Root> forecastCity) //local method for complete the principal panel, his contains the city name, image, and hour
         {
-            CityNameTextBlock.Text = forecastCity[0].name;
-          
-            //VER SI FUNCIONA
-            
-            principalForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[0], "Now").ImageSource;
-            ////////////
+            try
+            {
+                CityNameTextBlock.Text = forecastCity[0].name; //Set the city name
+                principalForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[0], "Now").ImageSource; // Build source for principal image
 
-            forecastImageText.Text = forecastCity[0].conditionTextNow;
-            Hour.Text = $"Hour: {DateTime.Now.ToString()}";
-
+                forecastImageText.Text = forecastCity[0].conditionTextNow; // Set the text below the image 
+                Hour.Text = $"Hour: {DateTime.Now.ToString()}";
+            }
+            catch(System.Exception  ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Principal Panel", ex.Message, "Inicio", ex.HResult);
+            }
         }
-        public void completeInfoForSecondaryPanel(List<Root> forecastCity)
+        public void completeInfoForSecondaryPanel(List<Root> forecastCity) //Local method for complete the secondary panel, his contains the forecast in three days
         {
-            //First Ellipse
-            ImageBrush imageToSet = new();
-            imageToSet.ImageSource = new BitmapImage(new Uri($"https:{forecastCity[0].image}"));
-            //ver si funca
-            FirstCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[0],"Forecast").ImageSource;
-
-            FirstCircleDayName.Text = "Today";
-            FirstCircleTemperatureMax.Text = forecastCity[0].maxTemperature.ToString();
-            FirstCircleTemperatureMin.Text = forecastCity[0].minTemperature.ToString();
-
-            //Second Ellipse
-            SecondCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[1], "Forecast").ImageSource;
-            SecondCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[1].date);
-            SecondCircleTemperatureMax.Text = forecastCity[1].maxTemperature.ToString();
-            SecondCircleTemperatureMin.Text = forecastCity[1].minTemperature.ToString();
-
-            //Third Ellipse
-            ThirdCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[2], "Forecast").ImageSource;
-            ThirdCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[2].date);
-            ThirdCircleTemperatureMax.Text = forecastCity[2].maxTemperature.ToString() ;
-            ThirdCircleTemperatureMin.Text = forecastCity[2].minTemperature.ToString();
-        }
-
-        public void completeInfoForTemperaturaPanel(List<Root> forecastCity)
-        {
-            //principalMaxTemperature.Text = forecastCity[0].maxTemperature.ToString();
-            principalNowTemperature.Text = $"{forecastCity[0].temperatureNow.ToString()}°";
-            //principalMinTemperature.Text = forecastCity[0].minTemperature.ToString();
-        }
-        public void completeInfoForPrecipitationPanel(List<Root> forecastCity)
-        {
-            nowPrecipitation.Text = $"{forecastCity[0].precipitation.ToString()}mm";
-        }
-        public void completeForWindPanel(List<Root> forecastCity)
-        {
-            nowWind.Text = forecastCity[0].wind.ToString();
-        }
-        public void setEmptyAllPanels()
-        {
-            //Principal Panel
-            CityNameTextBlock.Text = string.Empty;
-            principalForecastImage.ImageSource = null;
-            forecastImageText.Text = string.Empty;
-            Hour.Text = string.Empty;
-
-            //Secondary Panel (Ellipse multiples)
-
+            try
+            {
                 //First Ellipse
-            
-            FirstCircleDayName.Text = "Have a";
-            FirstCircleTemperatureMax.Text = string.Empty;
-            FirstCircleTemperatureMin.Text = string.Empty;
+                ImageBrush imageToSet = new();
+                imageToSet.ImageSource = new BitmapImage(new Uri($"https:{forecastCity[0].image}"));
+             
+                FirstCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[0], "Forecast").ImageSource; //Create and set the image source with help of helper
+
+                FirstCircleDayName.Text = "Today"; //set text for day name in first circle 
+                FirstCircleTemperatureMax.Text = forecastCity[0].maxTemperature.ToString(); //set temperature Max in first circle 
+                FirstCircleTemperatureMin.Text = forecastCity[0].minTemperature.ToString(); //set temperature Min in first circle
 
                 //Second Ellipse
-            SecondCircleDayName.Text = "Nice";
-            SecondCircleTemperatureMax.Text = string.Empty;
-            SecondCircleTemperatureMin.Text = string.Empty;
+                SecondCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[1], "Forecast").ImageSource; //Create and set the image source with help of helper
+                SecondCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[1].date); //Set day name in second circle
+                SecondCircleTemperatureMax.Text = forecastCity[1].maxTemperature.ToString();//Set temperature Max in second circle
+                SecondCircleTemperatureMin.Text = forecastCity[1].minTemperature.ToString(); //Set temperature Min in second circle
 
                 //Third Ellipse
-            ThirdCircleDayName.Text = "Day :)";
-            ThirdCircleTemperatureMax.Text = string.Empty;
-            ThirdCircleTemperatureMin.Text = string.Empty;
+                ThirdCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[2], "Forecast").ImageSource; //Create and set the image source with help of helper
+                ThirdCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[2].date); //Set day name in third circle
+                ThirdCircleTemperatureMax.Text = forecastCity[2].maxTemperature.ToString();//Set temperature Max in third circle
+                ThirdCircleTemperatureMin.Text = forecastCity[2].minTemperature.ToString();//Set temperature Min in third circle
+            }
+            catch (System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Secondary Panel", ex.Message, "Inicio", ex.HResult);
+            }
 
-            //Temperature Panel
-            //principalMaxTemperature.Text = string.Empty;
-            principalNowTemperature.Text = string.Empty;
-            //principalMinTemperature.Text = string.Empty;
+            
+        }
 
-            //Precipitation Panel
-            nowPrecipitation.Text = string.Empty;
+        public void completeInfoForTemperaturePanel(List<Root> forecastCity) //Method for set the info in Temperature Panel
+        {
+            try
+            {
+                principalNowTemperature.Text = $"{forecastCity[0].temperatureNow.ToString()}°"; //This set the text into textblock for actually temperature
+            } catch (System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Temperature Panel" ,ex.Message ,"Inicio" ,ex.HResult );
+            }
+            
+           
+        }
+        public void completeInfoForPrecipitationPanel(List<Root> forecastCity)              //Method for set the info in Precipitation Panel
+        {
+            try
+            {
+                nowPrecipitation.Text = $"{forecastCity[0].precipitation.ToString()}mm";    //Set the text into text block for precipitation
+            }
+            catch(System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Precipitation Panel", ex.Message, "Inicio", ex.HResult);
+            }
+            
+        }
+        public void completeForWindPanel(List<Root> forecastCity)                           //Method for set the info in Wind Panel
+        {
+            try
+            {
+                nowWind.Text = forecastCity[0].wind.ToString();                             //Set the text into text block for wind
+            }
+            catch (System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Wind Panel", ex.Message, "Inicio", ex.HResult);
+            }
+            
+        }
+        public void setEmptyAllPanels() //Local method for set all panels empty at inicialice
+        {
+            try
+            {
+                //Principal Panel
+                CityNameTextBlock.Text = string.Empty;      //Set city name empty
+                principalForecastImage.ImageSource = null;  //set forecast image empty
+                forecastImageText.Text = string.Empty;      //Set image text empty
+                Hour.Text = string.Empty;                   //Set the hour empty
 
-            //Wind Panel
-            nowWind.Text = string.Empty;
+                //Secondary Panel (Ellipse multiples)
+
+                //First Ellipse
+
+                FirstCircleDayName.Text = "Have a";             //Set actual name day empty
+                FirstCircleTemperatureMax.Text = string.Empty;  //Set max temperature in actual day empty
+                FirstCircleTemperatureMin.Text = string.Empty;  //Set min temperature in actual day empty
+
+                //Second Ellipse
+                SecondCircleDayName.Text = "Nice";              //Set city name empty in Second day
+                SecondCircleTemperatureMax.Text = string.Empty; //Set max temperature in second day empty
+                SecondCircleTemperatureMin.Text = string.Empty; //Set min temperature in second day empty
+
+                //Third Ellipse
+                ThirdCircleDayName.Text = "Day :)";             //Set city name empty in Third day
+                ThirdCircleTemperatureMax.Text = string.Empty;  //Set max temperature in Third day empty
+                ThirdCircleTemperatureMin.Text = string.Empty;  //Set min temperature in Third day empty
+
+                //Temperature Panel
+                principalNowTemperature.Text = string.Empty;    //Set actual temperature empty
+
+                //Precipitation Panel
+                nowPrecipitation.Text = string.Empty;           //Set precipitation text empty
+
+                //Wind Panel
+                nowWind.Text = string.Empty;                    //Set wind text empty
+            }
+            catch (System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Set empty all panels", ex.Message, "Inicio", ex.HResult);
+            }
+
+
+
 
 
         }
 
-        private void completeAllPanels(List<Root> forecastCity)
+        private void completeAllPanels(List<Root> forecastCity) //Method for complete all panels by other methods
         {
-            if(forecastCity.Count > 0 && forecastCity != null)
+            try
             {
-                completeInfoForPrincipalPanel(forecastCity);
-                completeInfoForSecondaryPanel(forecastCity);
-                completeInfoForTemperaturaPanel(forecastCity);
-                completeInfoForPrecipitationPanel(forecastCity);
-                completeForWindPanel(forecastCity);
-            } 
+                if (forecastCity.Count > 0 && forecastCity != null)
+                {
+                    completeInfoForPrincipalPanel(forecastCity);        //call method for complete principal panel
+                    completeInfoForSecondaryPanel(forecastCity);        //call method for complete secondary panel
+                    completeInfoForTemperaturePanel(forecastCity);      //call method for complete temperature panel
+                    completeInfoForPrecipitationPanel(forecastCity);    //call method for complete precipitation panel
+                    completeForWindPanel(forecastCity);                 //call method for complete wind panel
+                }
+            }
+            catch(System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Complete all panels", ex.Message, "Inicio", ex.HResult);
+            }
+            
            
         }
 
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
+        private void ButtonBack_Click(object sender, RoutedEventArgs e) //Event for move to before city
         {
-            if(count > 0 )
+            try
             {
-                count--;
-                completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);
+                if (count > 0)
+                {
+                    count--;
+                    completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);   //call method for complete all panels with count
+                }
+                else
+                {
+                    count = _ServiceGetAllCityInLocalData._allCity.Count - 1;
+                    completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);   //call method for complete all panels with count
+                }
             }
-            else
+            catch(System.Exception ex)
             {
-                count = _ServiceGetAllCityInLocalData._allCity.Count - 1;
-                completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);
-            }
-        }
-
-        private void ButtonNext_Click(object sender, RoutedEventArgs e)
-        {
-            if(count < _ServiceGetAllCityInLocalData._allCity.Count - 1)
-            {
-                count++;
-                completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);
-            }
-            else
-            {
-                count = 0;
-                completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);
-            }
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            if(_ServiceGetAllCityInLocalData._allCity.Count != 0)
-            {
-                completeAllPanels(_ServiceGetAllCityInLocalData._allCity[0]);
+                HelperForWriteErrorMessage.WriteCompleteError("ButtonBack_Click", ex.Message, "Inicio", ex.HResult);
             }
             
+        }
+
+        private void ButtonNext_Click(object sender, RoutedEventArgs e) //Event for move to the next city
+        {
+            try
+            {
+
+                if (count < _ServiceGetAllCityInLocalData._allCity.Count - 1)
+                {
+                    count++;
+                    completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);   //call method for complete all panels with count
+                }
+                else
+                {
+                    count = 0;
+                    completeAllPanels(_ServiceGetAllCityInLocalData._allCity[count]);   //call method for complete all panels with count
+                }
+            }
+            catch (System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("ButtonNext_Click", ex.Message, "Inicio", ex.HResult);
+            }
+
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e) //Event for when page is loaded, this function is for update data for panels
+        {
+            try
+            {
+                if (_ServiceGetAllCityInLocalData._allCity.Count != 0)
+                {
+                    completeAllPanels(_ServiceGetAllCityInLocalData._allCity[0]);   //call method for complete all panels with first city
+                }
+            }
+            catch (System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("Page_Loaded", ex.Message, "Inicio", ex.HResult);
+            }
         }
     }
 }
