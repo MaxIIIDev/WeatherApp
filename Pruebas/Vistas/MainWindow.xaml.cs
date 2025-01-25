@@ -51,5 +51,7 @@ namespace Pruebas
                     System.Diagnostics.Debug.WriteLine($"No se encontró el tipo para: {nombreDeLaPagina}"); }
                 }
         }
+
+       
     }
 }

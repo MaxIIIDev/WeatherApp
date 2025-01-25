@@ -93,9 +93,11 @@ namespace Pruebas.Vistas
                 }
 
                 _ServiceGetAllCityInLocalData.AddCity(forecastObtainWithApi);
+                
                 _finalLongitude = null;
                 _finalLatitude = null;
-                boton.IsEnabled = false; 
+                boton.IsEnabled = false;
+                
             }
             catch(Exception ex)
             {

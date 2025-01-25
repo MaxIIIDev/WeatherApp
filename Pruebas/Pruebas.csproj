@@ -45,6 +45,8 @@
 	  
     <PackageReference Include="Mapsui.WinUI" Version="5.0.0-beta.7" />
 	  
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.1" />
+	  
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
 	  
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />

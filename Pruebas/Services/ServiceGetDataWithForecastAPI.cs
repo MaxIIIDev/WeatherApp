@@ -1,4 +1,5 @@
 ﻿
+
 using Pruebas.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Pruebas.Services
     {
 
         private HttpClient client = new();
-        //public ServiceToParseForecastAPIInformationToClimaClass _serviceToParseForecastAPIInformationToClimaClass = new ServiceToParseForecastAPIInformationToClimaClass();
+        //private IMemoryCache cache;Ver
         public ServiceGetDataWithForecastAPI()
         {
             

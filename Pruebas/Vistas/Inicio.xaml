@@ -7,9 +7,9 @@
     xmlns:local="using:Pruebas.Vistas"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="{ThemeResource AppBarBorderThemeBrush}"
-    
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -29,6 +29,7 @@
             Margin="20"
             Padding="20"
             Background="{ThemeResource SystemAccentColorLight1}"
+            Click="ButtonBack_Click"
             Foreground="White">
             <FontIcon Glyph="&#xE72B;" />
         </Button>
@@ -219,25 +220,13 @@
                             FontSize="40"
                             Text="Temperatura:" />
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-
-                            <TextBlock
-                                x:Name="principalMaxTemperature"
-                                Margin="3"
-                                Padding="10"
-                                FontSize="35"
-                                Text="33°" />
                             <TextBlock
                                 x:Name="principalNowTemperature"
                                 Margin="3"
                                 Padding="10"
                                 FontSize="35"
                                 Text="25°" />
-                            <TextBlock
-                                x:Name="principalMinTemperature"
-                                Margin="3"
-                                Padding="10"
-                                FontSize="35"
-                                Text="20°" />
+
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
@@ -284,7 +273,7 @@
                         <TextBlock
                             Padding="10"
                             FontSize="40"
-                            Text="Viento Km/h:" />
+                            Text="Viento km/h:" />
                         <TextBlock
                             x:Name="nowWind"
                             Padding="10"
@@ -302,6 +291,7 @@
             Margin="10"
             Padding="20"
             Background="{ThemeResource SystemAccentColorLight1}"
+            Click="ButtonNext_Click"
             Foreground="White">
             <FontIcon Glyph="&#xE72A;" />
         </Button>

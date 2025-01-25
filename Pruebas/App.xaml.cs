@@ -33,6 +33,7 @@ namespace Pruebas
 
         private void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddSingleton<ServiceGetAllCityInLocalData>();
         }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
