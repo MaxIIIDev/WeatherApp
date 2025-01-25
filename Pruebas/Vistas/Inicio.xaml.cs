@@ -87,7 +87,7 @@ namespace Pruebas.Vistas
         }
         public void completeForWindPanel(List<Root> forecastCity)
         {
-            nowWind.Text = {forecastCity[0].wind.ToString();
+            nowWind.Text = forecastCity[0].wind.ToString();
         }
         public void setEmptyAllPanels()
         {
