@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Pruebas.Services;
 using System;
+using Pruebas.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,6 +36,7 @@ namespace Pruebas
         {
             
             services.AddSingleton<ServiceGetAllCityInLocalData>();
+            services.AddSingleton<HelperToDetectDoubleCity>();
         }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {

@@ -16,6 +16,7 @@ using Mapsui.Styles;
 using Mapsui.Nts;
 using Microsoft.UI.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using Pruebas.Helpers;
 
 namespace Pruebas.Vistas
 {
@@ -27,11 +28,13 @@ namespace Pruebas.Vistas
         ServiceGetAllCityInLocalData _ServiceGetAllCityInLocalData { get;}
 
         private ServiceGetDataWithForecastAPI _serviceGetDataWithForecastAPI = new ServiceGetDataWithForecastAPI();
+        private HelperToDetectDoubleCity _helperToDetectDoubleCity;
         private GenericCollectionLayer<List<IFeature>> layer;
+
         public Provincias ()
         {
             _ServiceGetAllCityInLocalData = ((App)Application.Current).ServiceProvider.GetService<ServiceGetAllCityInLocalData>();
-
+            _helperToDetectDoubleCity = ((App)Application.Current).ServiceProvider.GetService<HelperToDetectDoubleCity>();
             this.InitializeComponent();
             
             MyMap.Map.CRS = "EPSG:4326";
@@ -89,7 +92,7 @@ namespace Pruebas.Vistas
                 double longitudeReadyToWork = 0.0;
                 List<Root> forecastObtainWithApi = new();
 
-                if (_finalLatitude == null || _finalLongitude == null )
+                if (_finalLatitude == null || _finalLongitude == null )             
                 {
                     boton.IsEnabled = false;
                 }
@@ -103,7 +106,7 @@ namespace Pruebas.Vistas
                 {
                     forecastObtainWithApi = await _serviceGetDataWithForecastAPI.GetInfoFromForecastAPI(latitudeReadyToWork, longitudeReadyToWork);
                 }
-
+                _helperToDetectDoubleCity.detectAndDeleteDuplicatedCity(forecastObtainWithApi);
                 _ServiceGetAllCityInLocalData.AddCity(forecastObtainWithApi);
                 
                 _finalLongitude = null;
@@ -134,20 +137,18 @@ namespace Pruebas.Vistas
                 }
                 else
                 {
-                    //sacar la info del servicio, utilizar el spericalmercator from, para convertir las latitudes y longitudes en posiciones del mapa y luego, añadir un pin con las mismas
+                    //sacar la info del servicio, utilizar el spericalmercator from, para convertir las latitudes y longitudes en posiciones del mapa y luego, añadir un pin en el mapa con las mismas
 
                     List<Root> forecastList = await _serviceGetDataWithForecastAPI.GetInfoFromForecastAPI(searchBox.Text);
 
-                    foreach (var forecast in forecastList)
-                    {
-                        Debug.WriteLine(forecast.ToString());
+                    
+                    _helperToDetectDoubleCity.detectAndDeleteDuplicatedCity(forecastList);
+                    _ServiceGetAllCityInLocalData.AddCity(forecastList);
 
-                    }
+                    var coordenates = SphericalMercator.FromLonLat(forecastList[0].longitude, forecastList[0].latitude);
 
-                    var ppp = SphericalMercator.FromLonLat(forecastList[0].longitude, forecastList[0].latitude);
-
-                    var latitude = ppp.y;
-                    var longitude = ppp.x;
+                    var latitude = coordenates.y;
+                    var longitude = coordenates.x;
 
                     addPin(latitude, longitude);
 

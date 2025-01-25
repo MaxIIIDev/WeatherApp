@@ -33,10 +33,10 @@ namespace Pruebas.Vistas
         {
             try
             {
-                CityNameTextBlock.Text = forecastCity[0].name; //Set the city name
+                CityNameTextBlock.Text = forecastCity[0].name;                   //Set the city name
                 principalForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[0], "Now").ImageSource; // Build source for principal image
 
-                forecastImageText.Text = forecastCity[0].conditionTextNow; // Set the text below the image 
+                forecastImageText.Text = forecastCity[0].conditionTextNow;      // Set the text below the image 
                 Hour.Text = $"Hour: {DateTime.Now.ToString()}";
             }
             catch(System.Exception  ex)
@@ -54,31 +54,29 @@ namespace Pruebas.Vistas
              
                 FirstCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[0], "Forecast").ImageSource; //Create and set the image source with help of helper
 
-                FirstCircleDayName.Text = "Today"; //set text for day name in first circle 
-                FirstCircleTemperatureMax.Text = forecastCity[0].maxTemperature.ToString(); //set temperature Max in first circle 
-                FirstCircleTemperatureMin.Text = forecastCity[0].minTemperature.ToString(); //set temperature Min in first circle
+                FirstCircleDayName.Text = "Today";                                                              //set text for day name in first circle 
+                FirstCircleTemperatureMax.Text = forecastCity[0].maxTemperature.ToString();                     //set temperature Max in first circle 
+                FirstCircleTemperatureMin.Text = forecastCity[0].minTemperature.ToString();                     //set temperature Min in first circle
 
                 //Second Ellipse
                 SecondCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[1], "Forecast").ImageSource; //Create and set the image source with help of helper
-                SecondCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[1].date); //Set day name in second circle
-                SecondCircleTemperatureMax.Text = forecastCity[1].maxTemperature.ToString();//Set temperature Max in second circle
-                SecondCircleTemperatureMin.Text = forecastCity[1].minTemperature.ToString(); //Set temperature Min in second circle
+                SecondCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[1].date);  //Set day name in second circle
+                SecondCircleTemperatureMax.Text = forecastCity[1].maxTemperature.ToString();                    //Set temperature Max in second circle
+                SecondCircleTemperatureMin.Text = forecastCity[1].minTemperature.ToString();                    //Set temperature Min in second circle
 
                 //Third Ellipse
                 ThirdCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByUrl(forecastCity[2], "Forecast").ImageSource; //Create and set the image source with help of helper
-                ThirdCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[2].date); //Set day name in third circle
-                ThirdCircleTemperatureMax.Text = forecastCity[2].maxTemperature.ToString();//Set temperature Max in third circle
-                ThirdCircleTemperatureMin.Text = forecastCity[2].minTemperature.ToString();//Set temperature Min in third circle
+                ThirdCircleDayName.Text = Helpers.HelperForInicioClass.WhatDayIsByDate(forecastCity[2].date);    //Set day name in third circle
+                ThirdCircleTemperatureMax.Text = forecastCity[2].maxTemperature.ToString();                      //Set temperature Max in third circle
+                ThirdCircleTemperatureMin.Text = forecastCity[2].minTemperature.ToString();                      //Set temperature Min in third circle
             }
             catch (System.Exception ex)
             {
                 HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Secondary Panel", ex.Message, "Inicio", ex.HResult);
             }
-
-            
         }
 
-        public void completeInfoForTemperaturePanel(List<Root> forecastCity) //Method for set the info in Temperature Panel
+        public void completeInfoForTemperaturePanel(List<Root> forecastCity)                     //Method for set the info in Temperature Panel
         {
             try
             {
@@ -87,32 +85,28 @@ namespace Pruebas.Vistas
             {
                 HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Temperature Panel" ,ex.Message ,"Inicio" ,ex.HResult );
             }
-            
-           
         }
-        public void completeInfoForPrecipitationPanel(List<Root> forecastCity)              //Method for set the info in Precipitation Panel
+        public void completeInfoForPrecipitationPanel(List<Root> forecastCity)                   //Method for set the info in Precipitation Panel
         {
             try
             {
-                nowPrecipitation.Text = $"{forecastCity[0].precipitation.ToString()}mm";    //Set the text into text block for precipitation
+                nowPrecipitation.Text = $"{forecastCity[0].precipitation.ToString()}mm";        //Set the text into text block for precipitation
             }
             catch(System.Exception ex)
             {
                 HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Precipitation Panel", ex.Message, "Inicio", ex.HResult);
             }
-            
         }
-        public void completeForWindPanel(List<Root> forecastCity)                           //Method for set the info in Wind Panel
+        public void completeForWindPanel(List<Root> forecastCity)                                //Method for set the info in Wind Panel
         {
             try
-            {
-                nowWind.Text = forecastCity[0].wind.ToString();                             //Set the text into text block for wind
+            {       
+                nowWind.Text = forecastCity[0].wind.ToString();                                 //Set the text into text block for wind
             }
             catch (System.Exception ex)
             {
                 HelperForWriteErrorMessage.WriteCompleteError("Complete Info For Wind Panel", ex.Message, "Inicio", ex.HResult);
             }
-            
         }
         public void setEmptyAllPanels() //Local method for set all panels empty at inicialice
         {
@@ -156,10 +150,6 @@ namespace Pruebas.Vistas
                 HelperForWriteErrorMessage.WriteCompleteError("Set empty all panels", ex.Message, "Inicio", ex.HResult);
             }
 
-
-
-
-
         }
 
         private void completeAllPanels(List<Root> forecastCity) //Method for complete all panels by other methods
@@ -179,8 +169,6 @@ namespace Pruebas.Vistas
             {
                 HelperForWriteErrorMessage.WriteCompleteError("Complete all panels", ex.Message, "Inicio", ex.HResult);
             }
-            
-           
         }
 
         private void ButtonBack_Click(object sender, RoutedEventArgs e) //Event for move to before city
@@ -202,7 +190,6 @@ namespace Pruebas.Vistas
             {
                 HelperForWriteErrorMessage.WriteCompleteError("ButtonBack_Click", ex.Message, "Inicio", ex.HResult);
             }
-            
         }
 
         private void ButtonNext_Click(object sender, RoutedEventArgs e) //Event for move to the next city
@@ -225,10 +212,7 @@ namespace Pruebas.Vistas
             {
                 HelperForWriteErrorMessage.WriteCompleteError("ButtonNext_Click", ex.Message, "Inicio", ex.HResult);
             }
-
-
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e) //Event for when page is loaded, this function is for update data for panels
         {
             try
@@ -241,6 +225,21 @@ namespace Pruebas.Vistas
             catch (System.Exception ex)
             {
                 HelperForWriteErrorMessage.WriteCompleteError("Page_Loaded", ex.Message, "Inicio", ex.HResult);
+            }
+        }
+
+        private void ButtonDeleteCity_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if(_ServiceGetAllCityInLocalData._allCity.Count >0)
+                {
+                    _ServiceGetAllCityInLocalData._allCity.RemoveAt(count);
+                    Frame.Navigate(typeof(Inicio));
+                }
+            }catch(System.Exception ex)
+            {
+                HelperForWriteErrorMessage.WriteCompleteError("ButtonDeleteCity_Click",ex.Message,"Inicio",ex.HResult);
             }
         }
     }

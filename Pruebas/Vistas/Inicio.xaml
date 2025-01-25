@@ -303,7 +303,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             BorderBrush="Red"
-            BorderThickness="1">
+            BorderThickness="1"
+            Click="ButtonDeleteCity_Click">
             <FontIcon
                 FontSize="35"
                 Foreground="Red"
