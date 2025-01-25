@@ -31,45 +31,57 @@ namespace Pruebas.Vistas
         public Provincias ()
         {
             _ServiceGetAllCityInLocalData = ((App)Application.Current).ServiceProvider.GetService<ServiceGetAllCityInLocalData>();
+
             this.InitializeComponent();
+            
             MyMap.Map.CRS = "EPSG:4326";
+            
             MyMap.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            
             layer = new GenericCollectionLayer<List<IFeature>>
             {
                 Style = SymbolStyles.CreatePinStyle()
             };
+            
             MyMap.Map.Layers.Add(layer);
         }
-        private void MyMap_Tapped(object sender, TappedRoutedEventArgs e)
+        private void MyMap_Tapped(object sender, TappedRoutedEventArgs e)   //Event for when the user click the map
         {
-            var position = e.GetPosition(this);
+            try
+            {
+                var position = e.GetPosition(this);
 
-            ScreenPosition screenPosition = new ScreenPosition(position.X, position.Y);
-            MapInfo mapPosition = MyMap.GetMapInfo
-            (screenPosition, MyMap.Map.Layers.GetLayers());
+                ScreenPosition screenPosition = new ScreenPosition(position.X, position.Y);
+                MapInfo mapPosition = MyMap.GetMapInfo
+                (screenPosition, MyMap.Map.Layers.GetLayers());
 
-            double longitudeOnWorldPositionAxisX = mapPosition.WorldPosition.X;
-            double latitudeOnWorldPositionAxisY = mapPosition.WorldPosition.Y;
+                double longitudeOnWorldPositionAxisX = mapPosition.WorldPosition.X;
+                double latitudeOnWorldPositionAxisY = mapPosition.WorldPosition.Y;
 
-            //MPoint prueba = Mapsui.Projections.Mercator.ToLonLat(lon, lat); //Funciona pero es menos preciso
-            //double nuevaLon = prueba.Y;
-            //double nuevaLat = prueba.X;
+                //MPoint prueba = Mapsui.Projections.Mercator.ToLonLat(lon, lat); //Funciona pero es menos preciso
+                //double nuevaLon = prueba.Y;
+                //double nuevaLat = prueba.X;
 
-            (double lon ,double lat) sphericalCoordinates = SphericalMercator.ToLonLat(longitudeOnWorldPositionAxisX, latitudeOnWorldPositionAxisY);
+                (double lon, double lat) sphericalCoordinates = SphericalMercator.ToLonLat(longitudeOnWorldPositionAxisX, latitudeOnWorldPositionAxisY);
 
-            //dan valores inversos
-            _finalLatitude = sphericalCoordinates.lat;
-            _finalLongitude = sphericalCoordinates.lon;
+                //dan valores inversos
+                _finalLatitude = sphericalCoordinates.lat;
+                _finalLongitude = sphericalCoordinates.lon;
 
-            boton.IsEnabled = true;
+                boton.IsEnabled = true;
 
-            Debug.WriteLine("Latitud: " + _finalLatitude + ", Longitud: " +  _finalLongitude);
+                Debug.WriteLine("Latitud: " + _finalLatitude + ", Longitud: " + _finalLongitude);
 
-            addPin(latitudeOnWorldPositionAxisY, longitudeOnWorldPositionAxisX);
+                addPin(latitudeOnWorldPositionAxisY, longitudeOnWorldPositionAxisX);
+            }catch(Exception ex)
+            {
+                Helpers.HelperForWriteErrorMessage.WriteCompleteError("MyMapp_Tapped", ex.Message, "Provincias", ex.HResult);
+            }
+            
             
         }
 
-        public async void addForecastEventByButtonPressed(object sender, TappedRoutedEventArgs e)
+        public async void addForecastEventByButtonPressed(object sender, TappedRoutedEventArgs e)   //Event when user touch the add button
         {
             try
             {
@@ -101,48 +113,53 @@ namespace Pruebas.Vistas
             }
             catch(Exception ex)
             {
-                Debug.WriteLine("Ocurrio un error en la peticion");
-                Debug.WriteLine("Mensaje de error: " + ex.Message);
+                Helpers.HelperForWriteErrorMessage.WriteCompleteError("addForecastEventByButtonPressed",ex.Message,"Provincias",ex.HResult);
             }
             
             
 
         }
 
-        private async void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) //Event when the user search the city
         {
-            if (boton.IsEnabled)
+            try
             {
-                boton.IsEnabled = false;
-            }
-            if(searchBox.Text == "")
-            { 
-                searchBox.PlaceholderText = "Our recommendation is the patron: City + Country";
-            }
-            else
-            {
-                //sacar la info del servicio, utilizar el spericalmercator from, para convertir las latitudes y longitudes en posiciones del mapa y luego, añadir un pin con las mismas
-
-                List<Root> forecastList = await _serviceGetDataWithForecastAPI.GetInfoFromForecastAPI(searchBox.Text);
-
-                foreach(var forecast in forecastList)
+                if (boton.IsEnabled)
                 {
-                    Debug.WriteLine(forecast.ToString());
-                    
+                    boton.IsEnabled = false;
                 }
+                if (searchBox.Text == "")
+                {
+                    searchBox.PlaceholderText = "Our recommendation is the patron: City + Country";
+                }
+                else
+                {
+                    //sacar la info del servicio, utilizar el spericalmercator from, para convertir las latitudes y longitudes en posiciones del mapa y luego, añadir un pin con las mismas
 
-                var ppp = SphericalMercator.FromLonLat(forecastList[0].longitude, forecastList[0].latitude);
+                    List<Root> forecastList = await _serviceGetDataWithForecastAPI.GetInfoFromForecastAPI(searchBox.Text);
 
-                var latitude = ppp.y;
-                var longitude = ppp.x;
+                    foreach (var forecast in forecastList)
+                    {
+                        Debug.WriteLine(forecast.ToString());
 
-                addPin(latitude, longitude);
+                    }
 
+                    var ppp = SphericalMercator.FromLonLat(forecastList[0].longitude, forecastList[0].latitude);
+
+                    var latitude = ppp.y;
+                    var longitude = ppp.x;
+
+                    addPin(latitude, longitude);
+
+                }
             }
-
-
+            catch(Exception ex)
+            {
+                Helpers.HelperForWriteErrorMessage.WriteCompleteError("AutoSuggestBox_QuerySubmitted", ex.Message, "Provincias", ex.HResult);
+            }
+            
         }
-        public void addPin(double latitude, double longitude)
+        public void addPin(double latitude, double longitude) //Method for add pin in map
         {
             try
             {
@@ -157,7 +174,7 @@ namespace Pruebas.Vistas
             }
             catch(Exception ex)
             {
-                Debug.WriteLine("Ocurrio un error al añadir el pin");
+                Helpers.HelperForWriteErrorMessage.WriteCompleteError("addPin", ex.Message, "Provincias", ex.HResult);
             }
             
         }
