@@ -58,5 +58,17 @@ namespace Pruebas.Helpers
             }
             return imageToSet;
         }
+        public static ImageSource buildImageSourceByPath(String imageRoute)
+        {
+            ImageBrush imageToSet = new();
+
+            if (imageRoute != null && imageRoute != "")
+            {
+                imageToSet.ImageSource = new BitmapImage(new Uri($"{imageRoute}"));
+            }
+            
+                
+            return imageToSet.ImageSource;
+        }
     }
 }

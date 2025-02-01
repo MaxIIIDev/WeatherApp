@@ -113,37 +113,39 @@ namespace Pruebas.Vistas
             try
             {
                 //Principal Panel
-                CityNameTextBlock.Text = string.Empty;      //Set city name empty
-                principalForecastImage.ImageSource = null;  //set forecast image empty
-                forecastImageText.Text = string.Empty;      //Set image text empty
+                CityNameTextBlock.Text = "Hello!!";      //Set city name empty
+                principalForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByPath("C:\\Users\\Max\\Desktop\\Proyectos mios\\C#\\PROYECTOS\\C#\\Microsoft\\Winui3\\Pruebas\\Pruebas\\Assets\\earth_planet_icon_263082.png");  //set icon in forecast image 
+                forecastImageText.Text = "How are you?";      //Set image text empty
                 Hour.Text = string.Empty;                   //Set the hour empty
 
                 //Secondary Panel (Ellipse multiples)
 
                 //First Ellipse
-
+                FirstCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByPath("C:\\Users\\Max\\Desktop\\Proyectos mios\\C#\\PROYECTOS\\C#\\Microsoft\\Winui3\\Pruebas\\Pruebas\\Assets\\sunny_sun_cloud_weather_cloudy_icon_194237.png");
                 FirstCircleDayName.Text = "Have a";             //Set actual name day empty
                 FirstCircleTemperatureMax.Text = string.Empty;  //Set max temperature in actual day empty
                 FirstCircleTemperatureMin.Text = string.Empty;  //Set min temperature in actual day empty
 
                 //Second Ellipse
+                SecondCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByPath("C:\\Users\\Max\\Desktop\\Proyectos mios\\C#\\PROYECTOS\\C#\\Microsoft\\Winui3\\Pruebas\\Pruebas\\Assets\\partly_cloudy_day_sun_clouds_weather_icon_177560.png");
                 SecondCircleDayName.Text = "Nice";              //Set city name empty in Second day
                 SecondCircleTemperatureMax.Text = string.Empty; //Set max temperature in second day empty
                 SecondCircleTemperatureMin.Text = string.Empty; //Set min temperature in second day empty
 
                 //Third Ellipse
+                ThirdCircleForecastImage.ImageSource = HelperForInicioClass.buildImageSourceByPath("C:\\Users\\Max\\Desktop\\Proyectos mios\\C#\\PROYECTOS\\C#\\Microsoft\\Winui3\\Pruebas\\Pruebas\\Assets\\weather_storms_storm_rain_thunder_2783.png");
                 ThirdCircleDayName.Text = "Day :)";             //Set city name empty in Third day
                 ThirdCircleTemperatureMax.Text = string.Empty;  //Set max temperature in Third day empty
                 ThirdCircleTemperatureMin.Text = string.Empty;  //Set min temperature in Third day empty
 
                 //Temperature Panel
-                principalNowTemperature.Text = string.Empty;    //Set actual temperature empty
+                principalNowTemperature.Text = "This";    //Set actual temperature empty
 
                 //Precipitation Panel
-                nowPrecipitation.Text = string.Empty;           //Set precipitation text empty
+                nowPrecipitation.Text = "Is Your";           //Set precipitation text empty
 
                 //Wind Panel
-                nowWind.Text = string.Empty;                    //Set wind text empty
+                nowWind.Text = "Day";                    //Set wind text empty
             }
             catch (System.Exception ex)
             {

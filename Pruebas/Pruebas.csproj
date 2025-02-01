@@ -13,6 +13,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="safeimagekit-intento.png" />
     <None Remove="Vistas\Inicio.xaml" />
     <None Remove="Vistas\Provincias.xaml" />
   </ItemGroup>

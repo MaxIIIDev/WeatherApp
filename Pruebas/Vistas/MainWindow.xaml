@@ -10,7 +10,11 @@
     mc:Ignorable="d">
 
 
-    <NavigationView x:Name="nv" SelectionChanged="cambiarPagina">
+    <NavigationView
+        x:Name="nv"
+        IsSettingsVisible="False"
+        PaneDisplayMode="Top"
+        SelectionChanged="cambiarPagina">
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Inicio" Tag="Inicio" />
             <NavigationViewItem Content="Agregar/Quitar Provincias" Tag="Provincias" />

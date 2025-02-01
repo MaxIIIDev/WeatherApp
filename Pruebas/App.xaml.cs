@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Pruebas.Services;
 using System;
 using Pruebas.Helpers;
+using Pruebas.Vistas;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,7 +41,7 @@ namespace Pruebas
         }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            m_window = new MainWindow();           
             m_window.Activate();
         }
 

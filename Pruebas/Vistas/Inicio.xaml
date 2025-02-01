@@ -19,19 +19,16 @@
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
-
-
-
         </Grid.ColumnDefinitions>
         <Button
             x:Name="ButtonBack"
             Grid.Column="0"
-            Margin="20"
+            Margin="5"
             Padding="20"
-            Background="{ThemeResource SystemAccentColorLight1}"
+            Background="{ThemeResource SystemAltHighColor}"
             Click="ButtonBack_Click"
             Foreground="White">
-            <FontIcon Glyph="&#xE72B;" />
+            <FontIcon FontSize="25" Glyph="&#xE72B;" />
         </Button>
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -46,15 +43,15 @@
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="0"
-                Margin="30"
-                Padding="10"
+                Margin="30,0,30,30"
+                Padding="20"
                 VerticalAlignment="Bottom"
                 BorderBrush="{ThemeResource SystemAccentColorLight1}"
-                BorderThickness="1.6"
+                BorderThickness="0,0.8,0,0.8"
                 CornerRadius="10">
                 <TextBlock
                     x:Name="CityNameTextBlock"
-                    Margin="20"
+                    Margin="5"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="40"
@@ -62,9 +59,9 @@
                 <Ellipse
                     Width="150"
                     Height="150"
-                    Margin="10"
+                    Margin="5"
                     Stroke="{ThemeResource SystemAccentColorLight1}"
-                    StrokeThickness="5.5">
+                    StrokeThickness="2.5">
                     <Ellipse.Fill>
                         <ImageBrush
                             x:Name="principalForecastImage"
@@ -74,6 +71,7 @@
                 </Ellipse>
                 <TextBlock
                     x:Name="forecastImageText"
+                    Margin="0,5,0,5"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="20"
@@ -88,12 +86,12 @@
 
             <StackPanel
                 Grid.Row="1"
-                Margin="0"
-                Padding="10"
+                Margin="0,-10,0,8"
+                Padding="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 BorderBrush="{ThemeResource SystemAccentColorLight1}"
-                BorderThickness="1"
+                BorderThickness="0"
                 CornerRadius="10"
                 Orientation="Horizontal">
                 <StackPanel>
@@ -157,7 +155,7 @@
                         Text="22°" />
 
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
                     <Ellipse
                         Width="100"
                         Height="100"
@@ -193,14 +191,13 @@
             <Grid
                 Grid.Row="0"
                 Grid.RowSpan="2"
-                Grid.Column="2">
+                Grid.Column="2"
+                Margin="60,-30,0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".33*" />
-                    <RowDefinition Height=".33*" />
-                    <RowDefinition Height=".33*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <StackPanel
@@ -209,9 +206,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="{ThemeResource SystemAccentColorLight1}"
-                    BorderThickness="2"
+                    BorderThickness="0,0.8,0,0.8"
                     CornerRadius="10"
-                    Orientation="Horizontal">
+                    Orientation="Vertical">
                     <StackPanel>
                         <TextBlock
                             Padding="10"
@@ -229,71 +226,71 @@
 
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel
-                    Grid.Row="1"
-                    Padding="25"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    BorderBrush="{ThemeResource SystemAccentColorLight1}"
-                    BorderThickness="2"
-                    CornerRadius="10"
-                    Orientation="Horizontal">
-
                     <StackPanel
-                        Padding="10"
+                        Padding="25"
                         HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        BorderBrush="{ThemeResource SystemAccentColorLight1}"
+                        BorderThickness="0"
+                        CornerRadius="10"
                         Orientation="Vertical">
-                        <TextBlock
-                            Padding="10"
-                            FontSize="40"
-                            Text="Precipitacion:" />
-                        <TextBlock
-                            x:Name="nowPrecipitation"
-                            Padding="10"
-                            HorizontalAlignment="Center"
-                            FontSize="30"
-                            Text="20mm" />
-                    </StackPanel>
 
-                </StackPanel>
-                <StackPanel
-                    Grid.Row="3"
-                    Padding="25"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    BorderBrush="{ThemeResource SystemAccentColorLight1}"
-                    BorderThickness="2"
-                    CornerRadius="10"
-                    Orientation="Horizontal">
-                    <StackPanel
-                        Padding="10"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        <TextBlock
-                            Padding="10"
-                            FontSize="40"
-                            Text="Viento km/h:" />
-                        <TextBlock
-                            x:Name="nowWind"
+                        <StackPanel
                             Padding="10"
                             HorizontalAlignment="Center"
-                            FontSize="30"
-                            Text="40km/h" />
+                            Orientation="Vertical">
+                            <TextBlock
+                                Padding="10"
+                                FontSize="40"
+                                Text="Precipitacion:" />
+                            <TextBlock
+                                x:Name="nowPrecipitation"
+                                Padding="10"
+                                HorizontalAlignment="Center"
+                                FontSize="30"
+                                Text="20mm" />
+                        </StackPanel>
+
+                    </StackPanel>
+                    <StackPanel
+                        Padding="25"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        BorderBrush="{ThemeResource SystemAccentColorLight1}"
+                        BorderThickness="0"
+                        CornerRadius="10"
+                        Orientation="Vertical">
+                        <StackPanel
+                            Padding="10"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                Padding="10"
+                                FontSize="40"
+                                Text="Viento km/h:" />
+                            <TextBlock
+                                x:Name="nowWind"
+                                Padding="10"
+                                HorizontalAlignment="Center"
+                                FontSize="30"
+                                Text="40km/h" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
+
+
 
             </Grid>
         </Grid>
         <Button
             x:Name="ButtonNext"
             Grid.Column="2"
-            Margin="10"
+            Margin="28,0,0,0"
             Padding="20"
-            Background="{ThemeResource SystemAccentColorLight1}"
+            Background="{ThemeResource SystemAltHighColor}"
             Click="ButtonNext_Click"
             Foreground="White">
-            <FontIcon Glyph="&#xE72A;" />
+            <FontIcon FontSize="25" Glyph="&#xE72A;" />
         </Button>
         <Button
             x:Name="ButtonDeleteCity"
@@ -306,7 +303,7 @@
             BorderThickness="1"
             Click="ButtonDeleteCity_Click">
             <FontIcon
-                FontSize="35"
+                FontSize="25"
                 Foreground="Red"
                 Glyph="&#xE74D;" />
         </Button>

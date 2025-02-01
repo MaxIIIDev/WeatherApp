@@ -6,7 +6,6 @@ using System.Diagnostics;
 using Mapsui;
 using Mapsui.Projections;
 using Pruebas.Services;
-using NetTopologySuite.Index.Bintree;
 using System.Collections.Generic;
 using Pruebas.Models;
 using System;
@@ -17,6 +16,8 @@ using Mapsui.Nts;
 using Microsoft.UI.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Pruebas.Helpers;
+using Mapsui.Limiting;
+using System.Reflection;
 
 namespace Pruebas.Vistas
 {
@@ -36,9 +37,11 @@ namespace Pruebas.Vistas
             _ServiceGetAllCityInLocalData = ((App)Application.Current).ServiceProvider.GetService<ServiceGetAllCityInLocalData>();
             _helperToDetectDoubleCity = ((App)Application.Current).ServiceProvider.GetService<HelperToDetectDoubleCity>();
             this.InitializeComponent();
-            
+
+
             MyMap.Map.CRS = "EPSG:4326";
-            
+           
+
             MyMap.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
             
             layer = new GenericCollectionLayer<List<IFeature>>
@@ -47,7 +50,9 @@ namespace Pruebas.Vistas
             };
             
             MyMap.Map.Layers.Add(layer);
+            
         }
+        
         private void MyMap_Tapped(object sender, TappedRoutedEventArgs e)   //Event for when the user click the map
         {
             try
@@ -57,7 +62,7 @@ namespace Pruebas.Vistas
                 ScreenPosition screenPosition = new ScreenPosition(position.X, position.Y);
                 MapInfo mapPosition = MyMap.GetMapInfo
                 (screenPosition, MyMap.Map.Layers.GetLayers());
-
+                
                 double longitudeOnWorldPositionAxisX = mapPosition.WorldPosition.X;
                 double latitudeOnWorldPositionAxisY = mapPosition.WorldPosition.Y;
 
